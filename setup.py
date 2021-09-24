@@ -14,8 +14,8 @@ classifiers = [
 ]
 
 setup(
-    name="cpmax_toolbox",
-    version="1.0.0",
+    name="cpmaxToolbox",
+    version="0.0.1",
     description="Toolbox for cp.max Rotortechnik GmbH & Co. KG",
     long_description=README,
     long_description_content_type="text/markdown",
@@ -27,5 +27,5 @@ setup(
     classifiers=classifiers,
     packages=find_packages(),
     include_package_data=True,
-    install_requires=["datetime", "pandas", "numpy", "rich"],
+    install_requires=["pandas", "numpy", "rich"],
 )
