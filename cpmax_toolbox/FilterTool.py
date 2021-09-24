@@ -1,4 +1,5 @@
 from datetime import date
+from typing import Optional
 import pandas as pd
 import numpy as np
 import time
@@ -67,7 +68,7 @@ def to_vibA_import(df: pd.DataFrame,
         )
 
 
-def cap_thres(df: pd.DataFrame, axis_list: list, thres: int, inplace: bool) -> pd.DataFrame:
+def cap_thres(df: pd.DataFrame, axis_list: list, thres: int, inplace: bool) -> Optional[pd.DataFrame]:
     """
     caps the maximum value of multiple axis, does not cut the time series
 
@@ -89,7 +90,7 @@ def cap_thres(df: pd.DataFrame, axis_list: list, thres: int, inplace: bool) -> p
         return df
 
 
-def filt_rot_thres(df: pd.DataFrame, axis_list: list, trig: str, thres: int, inplace: bool, debug:bool=None) -> pd.DataFrame:
+def filt_rot_thres(df: pd.DataFrame, axis_list: list, trig: str, thres: int, inplace: bool, debug:bool=None) -> Optional[pd.DataFrame]:
     """
     drops rotations from DataFrame where at least one of the axis hits the threshold
 
@@ -131,7 +132,7 @@ def filt_rot_thres(df: pd.DataFrame, axis_list: list, trig: str, thres: int, inp
         return df
 
 
-def filt_rot_mean(df: pd.DataFrame, axis_list: list, trig: str, diff: int, inplace: bool, debug:bool=None) -> pd.DataFrame:
+def filt_rot_mean(df: pd.DataFrame, axis_list: list, trig: str, diff: int, inplace: bool, debug:bool=None) -> Optional[pd.DataFrame]:
     """
     drops rotations from the DataFrame where the axis mean value differs more than `diff` from `0`
 
