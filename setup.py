@@ -7,9 +7,9 @@ HERE = pathlib.Path(__file__).parent
 README = (HERE / "README.md").read_text()
 
 now = datetime.datetime.now()
-v_dt = now.strftime("%j")+"_"+f"{60*now.hour+now.minute}"
+v_dt = now.strftime("%j")+"."+f"{60*now.hour+now.minute}"
 
-VERSION = "0.0.3_"+v_dt
+VERSION = "0.0.3."+v_dt
 
 classifiers = [
     "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
