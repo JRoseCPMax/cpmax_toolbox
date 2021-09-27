@@ -1,11 +1,13 @@
 import pathlib
 from setuptools import setup, find_packages
+import datetime
 
 HERE = pathlib.Path(__file__).parent
 
 README = (HERE / "README.md").read_text()
 
-VERSION = "0.0.3"
+
+VERSION = "0.0.3_"+datetime.datetime.now().strftime("%j")
 
 classifiers = [
     "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
