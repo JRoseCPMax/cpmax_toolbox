@@ -5,6 +5,8 @@ HERE = pathlib.Path(__file__).parent
 
 README = (HERE / "README.md").read_text()
 
+VERSION = "0.0.3"
+
 classifiers = [
     "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
     "Programming Language :: Python :: 3",
@@ -15,7 +17,7 @@ classifiers = [
 
 setup(
     name="cpmaxToolbox",
-    version="0.0.1",
+    version=VERSION,
     description="Toolbox for cp.max Rotortechnik GmbH & Co. KG",
     long_description=README,
     long_description_content_type="text/markdown",
