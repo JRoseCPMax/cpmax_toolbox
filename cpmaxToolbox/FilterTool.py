@@ -46,10 +46,14 @@ def to_vibA_import(df: pd.DataFrame,
 
     if datestring == None:
         datestring = time.strftime('%d.%m.%Y\t%H:%M:%S', time.struct_time(time.localtime()))
+
     if set(axis_dict.values()) != {"Axial", "Radial", "Torsional", "Trigger"}:
-        print("check axis_dict!")
-        return
-    
+        raise ValueError("axis dict does not have the right values")
+
+    for k in axis_dict.keys():
+        if k not in df.columns:
+            raise ValueError(f"axis dict key {k} not in df columns")
+
     df.rename(columns = axis_dict, inplace=True)
     with open(fnam, 'w') as f:
         f.write(f'Hardware-Takt:\t{sample_rate} Hz\n')
@@ -114,9 +118,9 @@ def filt_rot_thres(df: pd.DataFrame, axis_list: list, trig: str, thres: int, inp
 
     s_out = pd.Series(False, index=df.index)
     for ax in axis_list:
-        s_out = s_out|(np.sqrt(df[ax]**2) > thres)
+        s_out = s_out|(np.sqrt((df[ax] - df[ax].mean())**2) > thres)
 
-    s_rotstart = df[trig].diff()>0
+    s_rotstart = df[trig].diff() > 0
     rot_starts = list(s_out[s_rotstart].index)
     rots = {(rot_starts[i], rot_starts[i+1]-1):0 for i in range(len(rot_starts)-1)}
 

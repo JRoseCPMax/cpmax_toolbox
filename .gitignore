@@ -1,3 +1,5 @@
 dist
 build
 cpmaxToolbox.egg-info
+examples/Bremerhaven/Bremerhaven_2.txt
+examples/viba_import/Import_ZR.txt
