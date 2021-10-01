@@ -2,6 +2,7 @@ import pathlib
 from setuptools import setup, find_packages
 import datetime
 import os
+import pathlib
 
 HERE = pathlib.Path(__file__).parent
 
@@ -12,15 +13,17 @@ v_dt = now.strftime("%j")+"."+f"{60*now.hour+now.minute}"
 
 VERSION = "0.1.0."+v_dt
 
-with open("temp", "w") as f_w, open("cpmaxToolBox/__init__.py", "r") as f_r:
+init = pathlib.Path.cwd()/"cpmaxToolbox"/"__init__.py"
+
+with open("temp", "w") as f_w, open(init, "r") as f_r:
     for line in f_r.readlines():
         if not "__version__" in line:
-            f_w.write(line+"\n")
+            f_w.write(line)
         else:
-            f_w.write (f'__version__ = "{VERSION}"\n')
+            f_w.write (f'__version__ = "{VERSION}"')
 
-os.remove("cpmaxToolBox/__init__.py")
-os.rename("temp", "cpmaxToolBox/__init__.py")
+os.remove(init)
+os.rename("temp", init)
 
 classifiers = [
     "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
