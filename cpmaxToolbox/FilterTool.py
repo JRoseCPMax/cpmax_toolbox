@@ -94,7 +94,7 @@ def cap_thres(df: pd.DataFrame, axis_list: list, thres: int, inplace: bool) -> O
         return df
 
 
-def filt_rot_thres(df: pd.DataFrame, axis_list: list, trig: str, thres: int, inplace: bool, debug:bool=None) -> Optional[pd.DataFrame]:
+def filt_rot_thres(df: pd.DataFrame, axis_list: list, trig: str, thres: float, inplace: bool, debug:bool=None) -> Optional[pd.DataFrame]:
     """
     drops rotations from DataFrame where at least one of the axis hits the threshold
 
