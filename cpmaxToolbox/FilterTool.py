@@ -81,6 +81,7 @@ def cap_thres(df: pd.DataFrame, axis_list: list, thres: int, inplace: bool) -> O
     `axis_list` -- list of column names containing the vib data \n
     `thres`     -- threshold to which the vib data is capped \n
     `inplace`   -- wether or not a new DataFrame should be returned or the existing DataFrame gets manipulated \n
+
     """
 
     if not inplace:
@@ -94,7 +95,7 @@ def cap_thres(df: pd.DataFrame, axis_list: list, thres: int, inplace: bool) -> O
         return df
 
 
-def filt_rot_thres(df: pd.DataFrame, axis_list: list, trig: str, thres: float, inplace: bool, debug:bool=None) -> Optional[pd.DataFrame]:
+def filt_rot_thres(df: pd.DataFrame, axis_list: list, trig: str, thres: float, debug:bool=None) -> Optional[pd.DataFrame]:
     """
     drops rotations from DataFrame where at least one of the axis hits the threshold
 
@@ -106,21 +107,18 @@ def filt_rot_thres(df: pd.DataFrame, axis_list: list, trig: str, thres: float, i
     `inplace`   -- wether or not a new DataFrame should be returned or the existing DataFrame gets manipulated \n
 
     """
-
+    df_loc = df.copy()
     debug = False if debug==None else debug
     if debug:
         track_pb = track
     else:
         track_pb = lambda x:x
 
-    if not inplace:
-        df = df.copy()
-
-    s_out = pd.Series(False, index=df.index)
+    s_out = pd.Series(False, index=df_loc.index)
     for ax in axis_list:
-        s_out = s_out|(np.sqrt((df[ax] - df[ax].mean())**2) > thres)
+        s_out = s_out|(np.sqrt((df_loc[ax] - df_loc[ax].mean())**2) > thres)
 
-    s_rotstart = df[trig].diff() > 0
+    s_rotstart = df_loc[trig].diff() > 0
     rot_starts = list(s_out[s_rotstart].index)
     rots = {(rot_starts[i], rot_starts[i+1]-1):0 for i in range(len(rot_starts)-1)}
 
@@ -129,11 +127,9 @@ def filt_rot_thres(df: pd.DataFrame, axis_list: list, trig: str, thres: float, i
            s_out.loc[start:stop] = True
         else:
            s_out.loc[start:stop] = False
-    
-    df = df[~s_out]
 
-    if not inplace:
-        return df
+    return df_loc[~s_out]
+
 
 
 def filt_rot_mean(df: pd.DataFrame, axis_list: list, trig: str, diff: int, inplace: bool, debug:bool=None) -> Optional[pd.DataFrame]:
