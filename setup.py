@@ -11,7 +11,7 @@ README = (HERE / "README.md").read_text()
 now = datetime.datetime.now()
 v_dt = now.strftime("%j")+"."+f"{60*now.hour+now.minute}"
 
-VERSION = "0.1.0."+v_dt
+VERSION = "0.1.1."+v_dt
 
 init = pathlib.Path.cwd()/"cpmaxToolbox"/"__init__.py"
 
