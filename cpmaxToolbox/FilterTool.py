@@ -132,7 +132,7 @@ def filt_rot_thres(df: pd.DataFrame, axis_list: list, trig: str, thres: float, d
 
 
 
-def filt_rot_mean(df: pd.DataFrame, axis_list: list, trig: str, diff: int, inplace: bool, debug:bool=None) -> Optional[pd.DataFrame]:
+def filt_rot_mean(df: pd.DataFrame, axis_list: list, trig: str, diff: int, debug:bool=None) -> Optional[pd.DataFrame]:
     """
     drops rotations from the DataFrame where the axis mean value differs more than `diff` from `0`
 
@@ -150,8 +150,8 @@ def filt_rot_mean(df: pd.DataFrame, axis_list: list, trig: str, diff: int, inpla
         track_pb = track
     else:
         track_pb = lambda x:x
-    if not inplace:
-        df = df.copy()
+
+    df = df.copy()
 
     s_rotstart = df[trig].diff()>0
     rot_starts = list(df[s_rotstart].index)
@@ -167,8 +167,8 @@ def filt_rot_mean(df: pd.DataFrame, axis_list: list, trig: str, diff: int, inpla
                 s_out.loc[start:stop] = False
 
     df = df[~s_out]
-    if not inplace:
-        return df
+    
+    return df
 
 
 if __name__ == "__main__":
