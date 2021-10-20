@@ -5,6 +5,7 @@ import numpy as np
 import time
 from rich.progress import track
 
+
 def split_df(df:pd.DataFrame, split_col: str) -> dict:
     """
     splits a big DataFrame in a dict of multiple smaller ones\n
