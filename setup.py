@@ -1,17 +1,16 @@
 import pathlib
 from setuptools import setup, find_packages
-import datetime
+import time
 import os
 import pathlib
+
+import cpmaxToolbox
 
 HERE = pathlib.Path(__file__).parent
 
 README = (HERE / "README.md").read_text()
 
-now = datetime.datetime.now()
-v_dt = now.strftime("%j")+"."+f"{60*now.hour+now.minute}"
-
-VERSION = "0.1.1."+v_dt
+VERSION = '.'.join(cpmaxToolbox.__version__.split(".")[:3])+"."+hex(int(time.time()))[2:]
 
 init = pathlib.Path.cwd()/"cpmaxToolbox"/"__init__.py"
 
