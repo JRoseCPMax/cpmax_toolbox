@@ -10,7 +10,7 @@ HERE = pathlib.Path(__file__).parent
 
 README = (HERE / "README.md").read_text()
 
-VERSION = '.'.join(cpmaxToolbox.__version__.split(".")[:3])+"."+hex(int(time.time()))[2:]
+VERSION = '.'.join(cpmaxToolbox.__version__.split(".")[:3])+"."+int(time.time())
 
 init = pathlib.Path.cwd()/"cpmaxToolbox"/"__init__.py"
 
