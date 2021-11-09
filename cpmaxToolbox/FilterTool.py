@@ -5,6 +5,10 @@ import numpy as np
 import time
 from rich.progress import track
 
+from scipy import signal
+
+import  itertools
+
 
 def split_df(df:pd.DataFrame, split_col: str) -> dict:
     """
@@ -132,7 +136,6 @@ def filt_rot_thres(df: pd.DataFrame, axis_list: list, trig: str, thres: float, d
     return df_loc[~s_out]
 
 
-
 def filt_rot_mean(df: pd.DataFrame, axis_list: list, trig: str, diff: int, debug:bool=None) -> Optional[pd.DataFrame]:
     """
     drops rotations from the DataFrame where the axis mean value differs more than `diff` from `0`
@@ -170,6 +173,29 @@ def filt_rot_mean(df: pd.DataFrame, axis_list: list, trig: str, diff: int, debug
     df = df[~s_out]
     
     return df
+
+
+def from_time_to_rev(df: pd.DataFrame, axis_list: list, trig: str, fs: int=512) -> Optional[pd.DataFrame]:
+    df_copy = df.copy()
+    def pairwise(iterable):
+        "s -> (s0,s1), (s1,s2), (s2, s3), ..."
+        a, b = itertools.tee(iterable)
+        next(b, None)
+        return zip(a, b)  
+
+    s_rotstart = df_copy[trig].diff()>0
+    rot_starts = list(df_copy[s_rotstart].index)
+    df_t_list = [df_copy.loc[r[0]:r[1]-1, :] for r in pairwise(rot_starts[1:])]
+
+    df_w_list = []
+    for df_t in df_t_list:
+        df_w = pd.DataFrame()
+        for ax in axis_list + [trig]:
+            df_w[ax] = signal.resample(df_t[ax], 512)
+        df_w_list.append(df_w)
+    df_new = pd.concat(df_w_list, ignore_index=True)
+    return df_new
+
 
 
 if __name__ == "__main__":
