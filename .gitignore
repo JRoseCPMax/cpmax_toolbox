@@ -5,3 +5,4 @@ examples/Bremerhaven/Bremerhaven_2.txt
 examples/viba_import/Import_ZR.txt
 .venv
 .vscode
+*.pyc
