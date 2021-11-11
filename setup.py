@@ -23,6 +23,12 @@ with open("temp", "w") as f_w, open(init, "r") as f_r:
 
 os.remove(init)
 os.rename("temp", init)
+required_packages = []
+with open("requirements.txt") as f:
+    for p in f.readlines():
+        while p[-1] in ("\r", "\n"):
+            p=p[:-1]
+        required_packages.append(p)
 
 classifiers = [
     "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
@@ -46,5 +52,5 @@ setup(
     classifiers=classifiers,
     packages=find_packages(),
     include_package_data=True,
-    install_requires=["pandas", "numpy", "rich"],
+    install_requires=required_packages,
 )
