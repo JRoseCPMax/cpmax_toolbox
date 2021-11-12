@@ -29,6 +29,7 @@ with open("requirements.txt") as f:
         while p[-1] in ("\r", "\n"):
             p=p[:-1]
         required_packages.append(p)
+[print(p) for p in required_packages]
 
 classifiers = [
     "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
